@@ -1,14 +1,16 @@
 # -*- coding:utf-8 -*-
 
-from opendatatools import usstock
+#from opendatatools import usstock
 import os
 import sys
 
-path = os.path.dirname(__file__) + os.sep + '..' + os.sep
+path = os.path.abspath(os.path.dirname(__file__) + os.sep + '..' + os.sep)
+print(path)
 sys.path.append(path)
 
-from ..tools.util import *
-from ..tools.mydb import *
+from tools.util import *
+from tools.mydb import *
+from tools.usstock import usstock_agent
 
 def us_total_cap(x):
     if isinstance(x, str) and x.endswith('B'):
@@ -34,11 +36,11 @@ dji_columns = ['code', 'name', 'is_dji', 'dji_weight']
 mydb.upsert_table(info_table, dji_columns, us.get_dji())
 
 # 全美股市场股票
-symbols, msg = usstock.get_symbols()
+symbols, msg = usstock_agent.get_symbols()
 if symbols is not None:
     columns = ['code', 'name', 'sector', 'industry', 'total_cap']
-    symbols.rename(columns={'Symbol': 'code', 'Name': 'name', 'Sector': 'sector', 'MarketCap': 'total_cap'},
-                   inplace=True)
+    symbols.rename(columns={'symbol': 'code', 'marketCap': 'total_cap'},
+                   inplace=True)    
     symbols = symbols[columns].set_index(['code']).drop_duplicates().reset_index()
     symbols.total_cap = symbols.total_cap.map(us_total_cap)
     mydb.upsert_table(info_table, columns, symbols)

@@ -16,18 +16,20 @@ def get_current_day(format="%Y-%m-%d"):
     curr_date = datetime.now()
     return datetime.strftime(curr_date, format)
 
+def get_3days_ago(format="%Y-%m-%d"):
+    today = datetime.today()
+    end_day = today + relativedelta(days=-3)
+    return datetime.strftime(end_day, format)
 
 def get_end_day(format="%Y-%m-%d"):
     today = datetime.today()
     end_day = today + relativedelta(days=+1)
     return datetime.strftime(end_day, format)
 
-
 def get_week_ago(format="%Y-%m-%d"):
     today = datetime.today()
     week_ago = today + relativedelta(days=-7)
     return datetime.strftime(week_ago, format)
-
 
 def get_2week_ago(format="%Y-%m-%d"):
     today = datetime.today()

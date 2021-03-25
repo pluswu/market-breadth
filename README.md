@@ -1,5 +1,4 @@
 # Market-Breadth
-
 计算美股、A股市场宽度
 
 ### 数据格式
@@ -11,17 +10,24 @@ zh_stocks_sector_sw_d.sql 生成 计算市场宽度依赖的视图
 tmp_zh_stocks_sw_sector_d 
 zh_stocks_sector_sw_d
 ```
+####使用docker本地运行mysql(默认mysql安装配置繁琐建议使用docker直接运行)
++ 1. docker中运行mysql
+docker pull mysql
+docker run  -e MYSQL_ROOT_PASSWORD=233233 -p 3306:3306  -v /home/pluswu/Data/mysql:/var/lib/mysql -d mysql --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci 
 
-安装好 mysql 并在 mysql 中运行 config/sql 目录下的文件可以创建好自己的底层表。
-
-另外需要让创建用户并授权，这里密码采用 `123456` ， 自行修改并修改配置文件 config/config.conf 中的配置项：
-```SQL
-ALTER USER 'stocks'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
-grant all privileges on  *.* to 'stocks'@'%';
++ 2. 创建数据库和表
+mysql -u root -P 3306 -h 0.0.0.0 -p < create_db.sql
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < us_stocks_d.sql
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < us_stocks_info.sql
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < us_stocks_sector_d.sql
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < zh_stocks_d.sql
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < zh_stocks_info.sql
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < zh_stocks_sector_sw_d.sql
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < zh_stocks_industries_d.sql
 ```
 
 ### 数据获取
-A 股使用 Tushare 获取，欢迎使用 https://tushare.pro/register?reg=275414 注册邀请链接帮我加积分。
+A 股使用 Tushare 获取，欢迎使用 https://tushare.pro/register?reg=296500 注册邀请链接帮我加积分。
 ```python 
     pip install tushare
 ```

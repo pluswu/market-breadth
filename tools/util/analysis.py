@@ -52,7 +52,8 @@ def stock_amount(data, short):
     return data.reset_index()
 
 
-def is_gap(h, l, c, p_h, p_l, p_c):
+def is_gap(row, h, l, c, p_h, p_l, p_c):
+    print(row)
     if c is None or p_c is None:
         return 'N'
     elif c > p_c:
@@ -86,24 +87,28 @@ def stock_gap_and_over(data):
     data_copy = data_copy.set_index(['code', 'row_num'])
     data = pd.merge(data, data_copy, how='left', on=['code', 'row_num'])
 
+    #print(data.tail(2))
+    # #gap = data.copy()
+    #print(data.columns.get_indexer_for('high'))
     data['is_gap'] = data.apply(
-        lambda row: is_gap(row['high'], row['low'], row['close'], row['pre_high'], row['pre_low'], row['pre_close']),
-        axis=1, raw=True)
+        lambda row: is_gap(row, row['high'], row['low'], row['close'], row['pre_high'], row['pre_low'], row['pre_close']),
+        axis=1)
+        
     data['is_esm_over'] = data.apply(
         lambda row: is_over(row['esm'], row['pesm']),
-        axis=1, raw=True)
+        axis=1)
     data['is_eml_over'] = data.apply(
         lambda row: is_over(row['eml'], row['peml']),
-        axis=1, raw=True)
+        axis=1)
     data['is_cs_over'] = data.apply(
         lambda row: is_over(row['cs'], row['pcs']),
-        axis=1, raw=True)
+        axis=1)
     data['is_sm_over'] = data.apply(
         lambda row: is_over(row['sm'], row['psm']),
-        axis=1, raw=True)
+        axis=1)
     data['is_ml_over'] = data.apply(
         lambda row: is_over(row['ml'], row['pml']),
-        axis=1, raw=True)
+        axis=1)
     return data.reset_index()
 
 
@@ -133,7 +138,7 @@ def stock_turn_up(data, c, day):
     column = 'is_{}_up'.format(c)
     data[column] = data.apply(
         lambda row: is_turn_up(row['close'], row['pre_close'], row[close_ago], row[pre_close_ago]),
-        axis=1, raw=True)
+        axis=1)
     return data.reset_index()
 
 

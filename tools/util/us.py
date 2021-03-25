@@ -69,11 +69,11 @@ def download(symbol_list, start, end, interval, retry=10, pause=2):
     for _ in range(retry):
         try:
             return yf.download(symbol_list, start=start, end=end,
-                       group_by="ticker", threads=True, auto_adjust=True,
+                       group_by="ticker", threads=False, auto_adjust=True,
                        interval=interval)
         except:
             time.sleep(pause)
 
     return yf.download(symbol_list, start=start, end=end,
-                       group_by="ticker", threads=True, auto_adjust=True,
+                       group_by="ticker", threads=False, auto_adjust=True,
                        interval=interval)

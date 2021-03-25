@@ -20,6 +20,7 @@ CREATE TABLE `us_stocks_info` (
   `ndx_weight` decimal(20,3) DEFAULT NULL COMMENT '纳斯达克权重',
   `is_dji` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '是否道琼斯成分股',
   `dji_weight` decimal(20,3) DEFAULT NULL COMMENT '道琼斯权重',
+  `is_follow` int DEFAULT 0 COMMENT '是否关注',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

@@ -6,12 +6,12 @@ import sys
 path = os.path.dirname(__file__) + os.sep + '..' + os.sep
 sys.path.append(path)
 
-from ..tools.util import *
-from ..tools.mydb import *
+from tools.util import *
+from tools.mydb import *
 
 list_sql = '''
             select * from us_stocks_info
-            where total_cap > 10 or is_spx = 'Y' or is_ndx = 'Y' or is_dji = 'Y';
+            where total_cap > 10 or is_spx = 'Y' or is_ndx = 'Y' or is_dji = 'Y' or is_follow=1;
            '''
 
 start = datetime.now()
@@ -20,7 +20,7 @@ stk_codes = stk_info.code.copy()
 stk_info = stk_info.set_index(['code'])
 
 table = 'us_stocks_d'
-mydb.truncate_table(table)
+#mydb.truncate_table(table)
 
 columns = ['code', 'date', 'name', 'sector', 'sp_sector', 'industry', 'total_cap',
            'is_spx', 'spx_weight', 'is_ndx', 'ndx_weight', 'is_dji', 'dji_weight',
@@ -37,7 +37,7 @@ columns = ['code', 'date', 'name', 'sector', 'sp_sector', 'industry', 'total_cap
            'l_close', 'l_pre_close', 'is_l_up'
           ]
 # 获取日K线数据
-batch = 40
+batch = 1
 num = 0
 for n in range(0, len(stk_codes), batch):
     num += 1
@@ -47,16 +47,19 @@ for n in range(0, len(stk_codes), batch):
     # data = yf.download(symbol_list, start=date.get_year_ago(), end=date.get_end_day(),
     #                    group_by="ticker", threads=True, auto_adjust=True,
     #                    interval='1d')
-    data = us.download(symbol_list=symbol_list, start=date.get_year_ago(), end=date.get_end_day(),
+    data = us.download(symbol_list=symbol_list, start=date.get_3days_ago(), end=date.get_end_day(),
                         interval='1d')
     for i in sub_codes:
         if i in data.columns:
             stock = stk_info.loc[i]
+            #print(stock)
             df = data[i]
             if df is None:
                 continue
             df = df.tail(250)
             df = df.reset_index()
+            print(stock)
+            print(df)
             df.rename(columns={'Date': 'date', 'Open': 'open', 'High': 'high', 'Low': 'low',
                                'Close': 'close', 'Volume': 'vol'},
                       inplace=True)

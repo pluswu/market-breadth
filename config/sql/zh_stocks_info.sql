@@ -20,6 +20,7 @@ CREATE TABLE `zh_stocks_info` (
   `total_cap` bigint DEFAULT NULL COMMENT '总市值',
   `pe` decimal(20,3) DEFAULT NULL COMMENT 'PE',
   `inst_percent` decimal(20,3) DEFAULT NULL,
+  `is_follow` int DEFAULT 0 COMMENT '是否关注',
   PRIMARY KEY (`code`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
