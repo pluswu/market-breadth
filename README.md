@@ -12,18 +12,21 @@ zh_stocks_sector_sw_d
 ```
 #### 使用docker本地运行mysql(默认mysql安装配置繁琐建议使用docker直接运行)
 + 1. docker中运行mysql <br>
-docker pull mysql <br>
+```shell
+docker pull mysql 
 docker run  -e MYSQL_ROOT_PASSWORD=233233 -p 3306:3306  -v /home/pluswu/Data/mysql:/var/lib/mysql -d mysql --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci 
+```
 
 + 2. 创建数据库和表 <br>
-mysql -u root -P 3306 -h 0.0.0.0 -p < create_db.sql <br>
-mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < us_stocks_d.sql <br>
-mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < us_stocks_info.sql <br>
-mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < us_stocks_sector_d.sql<br>
-mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < zh_stocks_d.sql<br>
-mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < zh_stocks_info.sql<br>
-mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < zh_stocks_sector_sw_d.sql<br>
-mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < zh_stocks_industries_d.sql<br>
+```shell
+mysql -u root -P 3306 -h 0.0.0.0 -p < create_db.sql 
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < us_stocks_d.sql 
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < us_stocks_info.sql 
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < us_stocks_sector_d.sql
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < zh_stocks_d.sql
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < zh_stocks_info.sql
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < zh_stocks_sector_sw_d.sql
+mysql -u root -P 3306 -h 0.0.0.0 -D stocks -p < zh_stocks_industries_d.sql
 ```
 
 ### 数据获取

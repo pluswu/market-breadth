@@ -1,15 +1,15 @@
 # -*- coding:utf-8 -*-
 
-import os
 import sys
-
+import os
 path = os.path.dirname(__file__) + os.sep + '..' + os.sep
 sys.path.append(path)
 
 from tools.util import *
 from tools.mydb import *
 
-start_date = date.get_3days_ago('%Y%m%d')
+
+start_date = date.get_2year_ago('%Y%m%d')
 end_date = date.get_end_day('%Y%m%d')
 
 list_sql = '''
@@ -22,7 +22,7 @@ stk_codes = stk_info.ts_code.copy()
 stk_info = stk_info.set_index(['ts_code'])
 
 table = 'zh_stocks_d'
-#mydb.truncate_table(table)
+mydb.truncate_table(table)
 
 columns = ['code', 'date', 'name', 'industry', 'sw_ind1', 'sw_ind1_weight', 'area', 'market',
            'open', 'high', 'low', 'close', 'pre_close', 'is_gap',
