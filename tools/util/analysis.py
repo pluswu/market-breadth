@@ -8,6 +8,8 @@ from matplotlib import colors
 import seaborn as sns
 import imgkit
 
+#last commit change
+
 
 def stock_ma(data, short, mid, long):
     data = data.set_index(['date']).sort_index()
