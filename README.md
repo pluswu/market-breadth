@@ -15,6 +15,7 @@ zh_stocks_sector_sw_d
 ```shell
 docker pull mysql 
 docker run  -e MYSQL_ROOT_PASSWORD=233233 -p 3306:3306  -v /home/pluswu/Data/mysql:/var/lib/mysql -d mysql --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci 
+
 ```
 
 + 2. 创建数据库和表 <br>
